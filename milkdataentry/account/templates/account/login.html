@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="container center_div">
+		<div class="form">
+			<div class="row">
+				<div class="col-6 col-md-12">
+					<h2 style="color: white;">Please login</h2>
+					<form method="post">
+						{% csrf_token %}
+						 {% bootstrap_form form %}
+						{% buttons %}
+							<button type="submit" class="btn btn-outline-primary">Login</button>
+						{% endbuttons %}
+						<p style="color:white;">
+							Don't have an account
+							<a href="{% url 'account:register' %}">
+								<span style="color:green;">Register here</span>
+							</a>
+						</p>
+						{% for field in form %}
+						  <p>
+							{% for error in field.errors %}
+							  <p style="color: red">{{ error }}</p>
+							{% endfor %}
+
+  						{% endfor %}
+						  {% if form.non_field_errors %}
+							<div style="color: red">
+							  <p>{% bootstrap_form form.non_field_errors %}</p>
+							</div>
+						  {% endif %}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
